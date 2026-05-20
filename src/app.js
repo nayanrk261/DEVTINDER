@@ -2,16 +2,20 @@ const express = require("express");
 
 const app = express();
 
-app.get("/",(req,res) => {
-    res.send("Hello from the home page")
+app.get("/user",(req,res) => {
+    res.send("User get request")
 })
 
-app.get("/hello",(req,res) => {
-    res.send("hello bhai")
+app.post("/user",(req,res) => {
+    res.send("User post request")
 })
 
-app.get("/goat",(req,res) => {
-    res.send("Goat - Greatest of all Time")
+app.delete("/user",(req,res) => {
+    res.send("User delete request")
+})
+
+app.patch("/user",(req,res) => {
+    res.send("User patch request")
 })
 
 app.listen(3333, () => {
