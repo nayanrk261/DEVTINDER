@@ -92,10 +92,19 @@ const app = express();
 // });
 
 app.get("/getUserData",(req,res) => {
-    throw new Error("ujjksgshsfs");
-    res.send("user data sent");
+    try{
+        throw new Error("ujjksgshsfs");
+        res.send("user data sent");;
+    }catch(err){
+        res.status(500).send("some error");
+    }
 })
 
+app.use("/",(err,req,res,next) => {
+    if(err){
+        res.status(500).send("something went wrong");
+    }
+})
 
 
 app.listen(3333, () => {
