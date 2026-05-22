@@ -1,6 +1,8 @@
 const express = require("express");
 const { AdminAuth } = require("./middlewares/auth");
 const { UserAuth } = require("./middlewares/auth");
+const ConnectDB = require("./config/database");
+const User = require("./models/user");
 
 
 const app = express();
@@ -48,7 +50,7 @@ const app = express();
 //     res.send("User patch request")
 // })
 
-//EP-5
+//---------------------------------------------------EP-5-----------------------------------------------
 
 // app.use("/user",(req,res) => {
 //     console.log("take Resposnse 1");
@@ -91,24 +93,52 @@ const app = express();
 //     res.send("Deleted a User")
 // });
 
-app.get("/getUserData",(req,res) => {
+// app.get("/getuserdata",(req,res) => {
+//     try{
+//         throw new Error("ujjksgshsfs");
+//         res.send("user data sent");;
+//     }catch(err){
+//         res.status(500).send("some error");
+//     }
+// })
+
+// app.use("/",(err,req,res,next) => {
+//     if(err){
+//         res.status(500).send("something went wrong");
+//     }
+// })
+
+//-------------------------------------------------------Episode 6------------------------------------------------
+
+app.post("/signup", async(req,res) => {
+    const user = new User({
+        firstName: "khush",
+        lastName: "patil",
+        emailId: "khushpatil@gmail.com",
+        password: "khushp@"
+    });
+
     try{
-        throw new Error("ujjksgshsfs");
-        res.send("user data sent");;
+        await user.save();
+        res.send("user added to database");
     }catch(err){
-        res.status(500).send("some error");
+        res.status(500).send("error" + err.message);
     }
-})
+});
 
-app.use("/",(err,req,res,next) => {
-    if(err){
-        res.status(500).send("something went wrong");
-    }
-})
+ConnectDB()
+    .then(() => {
+        console.log("Database Conected");
+        app.listen(3333, () => {
+        console.log("server started at port 3333");
+       });
+    })
+    .catch((err) => {
+        console.log("Database not connected");
+    })
 
 
-app.listen(3333, () => {
-    console.log("server started at port 3333")
-})
+
+
 
 //?,+,*,regex,query,dynamic routes,params
