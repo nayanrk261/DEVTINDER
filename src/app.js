@@ -109,14 +109,12 @@ const app = express();
 // })
 
 //-------------------------------------------------------Episode 6------------------------------------------------
+//EP-7 -> making signUp API dynamic
+ 
+app.use(express.json());
 
-app.post("/signup", async(req,res) => {
-    const user = new User({
-        firstName: "khush",
-        lastName: "patil",
-        emailId: "khushpatil@gmail.com",
-        password: "khushp@"
-    });
+ app.post("/signup", async(req,res) => {
+    const user = new User(req.body);
 
     try{
         await user.save();
@@ -136,6 +134,8 @@ ConnectDB()
     .catch((err) => {
         console.log("Database not connected");
     })
+
+//--------------------------Episode - 7---------------------------------------------
 
 
 
