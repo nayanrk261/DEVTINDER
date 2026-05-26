@@ -124,6 +124,57 @@ app.use(express.json());
     }
 });
 
+app.get("/user", async (req,res) => {
+    const UserName = req.body.firstName;
+
+    try{
+        await User.find({userName : UserName});
+        res.send(user);
+    }
+    catch (err){
+        res.status(400).send("user not found");
+    }
+    
+})
+
+app.get("/feed", async (req,res) => {
+    try{
+        const user = await User.find({});
+        res.send(user);
+    }
+    catch{
+        res.status(500).send("something went wrong");
+    }
+})
+
+//-------------------------::::::::::::::::::: Delete a user ::::::::::::::::::--------------------------------
+app.delete("/delete", async (req,res) => {
+    const userId = req.body.userId;
+
+    try{
+        const user = await User.findByIdAndDelete(userId);
+        res.send("user deleted succsesfully");
+    }
+    catch{
+        res.status(500).send("something went wrong");
+    }
+})
+
+
+//-----------------:::::::::::::::::::: Update a User :::::::::::::::::::::::::------------------------------------------
+app.patch("/update", async (req,res) => {
+    const userId = req.body.userId;
+    const data = req.body;
+    try{
+        const user = await User.findByIdAndUpdate({_id : userId}, data);
+        res.send("user updated succsessfully");
+    }
+    catch{
+        res.status(500).send("something went wrong");
+    }
+})
+
+
 ConnectDB()
     .then(() => {
         console.log("Database Conected");
@@ -135,7 +186,7 @@ ConnectDB()
         console.log("Database not connected");
     })
 
-//--------------------------Episode - 7---------------------------------------------
+//--------------------------Episode - 8---------------------------------------------
 
 
 
