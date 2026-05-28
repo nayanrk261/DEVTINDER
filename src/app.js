@@ -113,7 +113,7 @@ const app = express();
  
 app.use(express.json());
 
- app.post("/signup", async(req,res) => {
+app.post("/signup", async(req,res) => {
     const user = new User(req.body);
 
     try{
@@ -167,6 +167,7 @@ app.patch("/update", async (req,res) => {
     const data = req.body;
     try{
         const user = await User.findByIdAndUpdate({_id : userId}, data);
+        runValidators : true,
         res.send("user updated succsessfully");
     }
     catch{
