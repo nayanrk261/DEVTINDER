@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
         type : String,
         default : "this is your about",
     }
-},{ dueDate: Date });
+},{ timestamps: true });
 
 const User = mongoose.model("User", userSchema);
 
